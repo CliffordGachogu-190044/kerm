@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kerm Designer, Infinity Style | Bags, Shoes &amp; More, Nairobi</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!--
+  HOW TO FINISH THIS SITE
+  1. Dashed boxes with an icon and "Add photo" are photo slots. Replace each one with
+     an <img src="..." alt="descriptive text"> of a clean, unwatermarked photo you own
+     the rights to (ask Claude to swap them in once you've uploaded the images).
+  2. Italic green-mid text ("Item name", "Add price") is placeholder. Replace with the real
+     item name and price for each piece.
+  3. This page loads no analytics, no tracking scripts, and no third-party embeds.
+     Fonts are self-hosted in /fonts. WhatsApp, Instagram and Google Maps links are
+     plain outbound links, not embeds, so they don't set cookies on this site.
+  4. The enquiry form does not submit anywhere or store anything. It only builds a
+     WhatsApp link from what someone types and opens it. See the script at the
+     bottom of this file.
+  5. Before launch: connect a custom domain, and have privacy.html, terms.html,
+     cookie-policy.html and refund-policy.html reviewed by a professional.
+-->
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --green:#5f6d32;
+    --green-darker:#4a5527;
+    --green-mid:#7f9142;
+    --green-light:#a7ac74;
+    --green-pale:#eef1e6;
+    --red:#c8352f;
+    --red-hover:#a82b26;
+    --maroon:#82221f;
+    --ink:#20221d;
+    --ink-soft:#5c6055;
+    --bg:#f9f9f6;
+    --line:#e4e4de;
+    --maxw:1160px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Inter', sans-serif; line-height:1.6;
+  }
+  h1,h2,h3,.logo-word{ font-family:'Poppins', sans-serif; font-weight:600; margin:0; color:var(--ink); }
+  .script{ font-family:'Dancing Script', cursive; font-weight:600; color:var(--green); }
+  p{ margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .skip-link{ position:absolute; left:-999px; background:var(--red); color:#fff; padding:.6rem 1rem; z-index:100; }
+  .skip-link:focus{ left:1rem; top:1rem; }
+  *:focus-visible{ outline:2px solid var(--red); outline-offset:3px; }
+
+  .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+
+  /* ---------- icons ---------- */
+  .icon{ width:28px; height:28px; color:var(--green-mid); flex-shrink:0; }
+  .map-link{ display:inline-block; margin-top:.35rem; font-size:.86rem; color:var(--green); font-weight:500; border-bottom:1px solid var(--green-light); }
+  .map-link:hover{ color:var(--green-darker); border-color:var(--green-darker); }
+
+  /* ---------- header ---------- */
+  .site-header{ position:sticky; top:0; z-index:50; background:rgba(251,251,248,0.95); backdrop-filter:blur(6px); border-bottom:1px solid var(--line); }
+  .header-inner{ max-width:var(--maxw); margin:0 auto; padding:.9rem 1.5rem; display:flex; align-items:center; justify-content:space-between; }
+  .brand{ display:flex; align-items:center; gap:.65rem; }
+  .brand-badge{ width:38px; height:38px; border-radius:9px; background:linear-gradient(155deg, var(--green), var(--green-darker)); display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Poppins',sans-serif; font-weight:700; font-size:1.15rem; }
+  /* ---------- brand lockup (recreated from the packaging photo) ---------- */
+  .brand-lockup{ display:inline-flex; align-items:center; gap:.6rem; }
+  .k-badge{ position:relative; width:38px; height:38px; flex-shrink:0; }
+  .k-badge svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .k-badge .k-letter{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#fff; font-family:'Poppins',sans-serif; font-weight:700; font-size:1.15rem; }
+  .wordmark{ display:inline-flex; border-radius:7px; overflow:hidden; font-family:'Poppins',sans-serif; font-weight:700; font-size:.98rem; line-height:1; }
+  .wordmark span{ padding:.5em .65em; color:#fff; }
+  .w-kerm{ background:var(--green-mid); }
+  .w-designer{ background:var(--maroon); }
+  .brand-lockup.lg{ gap:1.1rem; }
+  .brand-lockup.lg .k-badge{ width:80px; height:80px; }
+  .brand-lockup.lg .k-badge .k-letter{ font-size:2.7rem; }
+  .brand-lockup.lg .wordmark{ font-size:1.9rem; border-radius:10px; }
+
+  .logo-word{ font-size:1.05rem; letter-spacing:.01em; }
+
+  .nav-toggle-btn{ display:none; background:none; border:none; padding:.5rem; cursor:pointer; }
+  .nav-toggle-btn .bar{ display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; }
+
+  .site-nav{ display:flex; align-items:center; gap:1.9rem; }
+  .site-nav a{ font-size:.94rem; color:var(--ink-soft); font-weight:500; transition:color .15s ease; }
+  .site-nav a:hover{ color:var(--green); }
+  .nav-cta{ background:var(--green); color:#fff !important; padding:.55rem 1.1rem; border-radius:6px; }
+  .nav-cta:hover{ background:var(--green-darker); color:#fff !important; }
+
+  /* ---------- buttons ---------- */
+  .btn{ display:inline-block; padding:.85rem 1.6rem; font-size:.95rem; font-weight:500; border-radius:6px; border:1.5px solid transparent; transition:background .15s ease,color .15s ease,border-color .15s ease; cursor:pointer; }
+  .btn-primary{ background:var(--red); color:#fff; }
+  .btn-primary:hover{ background:var(--red-hover); }
+  .btn-ghost{ border-color:rgba(255,255,255,0.65); color:#fff; background:transparent; }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.06); border-color:#fff; }
+  .btn-outline{ border-color:var(--green); color:var(--green); background:transparent; }
+  .btn-outline:hover{ background:var(--green-pale); }
+
+  /* ---------- photo slots ---------- */
+  .photo-slot{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.5rem; border:1.5px dashed var(--green-light); background:var(--green-pale); border-radius:10px; color:var(--green); }
+  .photo-slot .icon{ width:30px; height:30px; color:var(--green); }
+  .photo-slot span{ font-family:'Poppins',sans-serif; font-weight:500; font-size:.82rem; }
+
+  /* ---------- hero ---------- */
+  .hero{ position:relative; overflow:hidden; background:var(--bg); color:var(--ink); }
+  .drip-band{ display:block; width:100%; }
+  .hero-inner{ position:relative; max-width:var(--maxw); margin:0 auto; padding:3rem 1.5rem 5.5rem; display:grid; grid-template-columns:1.15fr .85fr; gap:3rem; align-items:center; }
+  .hero-kicker{ font-size:.95rem; margin-bottom:1.1rem; color:var(--green); font-weight:500; }
+  .hero h1{ color:var(--ink); font-size:clamp(2.1rem,4.6vw,3.1rem); line-height:1.1; }
+  .hero .script{ display:block; font-size:clamp(2rem,4.6vw,2.8rem); margin-top:1rem; }
+  .hero-sub{ margin-top:1.3rem; max-width:42ch; font-size:1.05rem; color:var(--ink-soft); }
+  .hero-actions{ margin-top:2.1rem; display:flex; gap:1rem; flex-wrap:wrap; }
+  .hero-card{ background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.6rem; box-shadow:0 10px 24px rgba(28,34,48,0.06); }
+  .hero-card p{ font-size:.95rem; color:var(--ink-soft); }
+  .hero-card .hero-card-title{ font-family:'Poppins',sans-serif; font-weight:600; font-size:1.05rem; margin-bottom:.6rem; color:var(--ink); }
+
+  /* ---------- sections shared ---------- */
+  section{ padding:4.5rem 0; }
+  .section-head{ max-width:var(--maxw); margin:0 auto; padding:0 1.5rem 2.4rem; }
+  .section-head h2{ font-size:1.9rem; }
+  .section-head p{ color:var(--ink-soft); margin-top:.5rem; max-width:56ch; }
+
+  /* ---------- locations ---------- */
+  .locations{ display:grid; grid-template-columns:1fr 1fr; gap:1.6rem; max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+  .location-card{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:1.6rem; display:flex; gap:1rem; }
+  .location-card h3{ font-size:1.05rem; margin-bottom:.3rem; }
+  .location-card p{ color:var(--ink-soft); font-size:.95rem; }
+
+  /* ---------- brands strip ---------- */
+  .brands{ background:var(--green-pale); }
+  .brand-pills{ display:flex; flex-wrap:wrap; gap:.7rem; margin-top:1.1rem; }
+  .brand-pill{ background:#fff; border:1px solid var(--green-light); color:var(--green); font-weight:500; font-size:.9rem; padding:.5rem 1rem; border-radius:6px; }
+  .brands-note{ margin-top:1rem; color:var(--ink-soft); font-size:.92rem; }
+
+  /* ---------- shop categories ---------- */
+  .category{ max-width:var(--maxw); margin:0 auto; padding:2.6rem 1.5rem; border-top:1px solid var(--line); }
+  .category:first-of-type{ border-top:none; }
+  .category-head{ display:flex; align-items:center; gap:.8rem; margin-bottom:.3rem; }
+  .category-head h3{ font-size:1.3rem; }
+  .category-note{ color:var(--ink-soft); font-size:.92rem; margin:.4rem 0 1.6rem; }
+  .product-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.8rem; }
+  .product-photo{ aspect-ratio:4/5; width:100%; }
+  .product-meta{ margin-top:.8rem; padding-top:.7rem; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:baseline; gap:.8rem; }
+  .product-name{ font-style:italic; color:var(--green); font-size:1rem; }
+  .product-price{ color:var(--ink-soft); font-size:.92rem; white-space:nowrap; }
+
+  /* ---------- enquiry form ---------- */
+  .enquire{ background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .enquiry-form{ max-width:560px; margin:0 auto; padding:0 1.5rem; display:flex; flex-direction:column; gap:1.3rem; }
+  .field{ display:flex; flex-direction:column; gap:.4rem; }
+  .field label{ font-weight:500; font-size:.92rem; }
+  .field input, .field textarea{ font:inherit; font-size:1rem; padding:.75rem .9rem; border:1.5px solid var(--line); border-radius:6px; background:var(--bg); color:var(--ink); resize:vertical; }
+  .field input:focus, .field textarea:focus{ border-color:var(--green); outline:none; }
+  .consent{ display:flex; gap:.7rem; align-items:flex-start; font-size:.88rem; color:var(--ink-soft); }
+  .consent input{ margin-top:.25rem; width:17px; height:17px; accent-color:var(--green); flex-shrink:0; }
+  .consent a{ color:var(--green); text-decoration:underline; }
+  #ef-submit{ align-self:flex-start; }
+  .form-note{ font-size:.85rem; color:var(--ink-soft); }
+
+  /* ---------- visit ---------- */
+  .visit{ background:var(--ink); color:#fff; }
+  .visit .wrap{ text-align:center; max-width:var(--maxw); }
+  .visit h2{ color:#fff; font-size:1.9rem; }
+  .visit > .wrap > p{ color:#c7ccd3; max-width:48ch; margin:1rem auto 0; }
+  .visit-actions{ margin-top:2.2rem; display:flex; justify-content:center; flex-wrap:wrap; gap:1rem; }
+  .visit-actions .btn-primary{ background:var(--green); }
+  .visit-actions .btn-primary:hover{ background:var(--green-darker); }
+  .visit-recap{ margin-top:2.6rem; display:flex; justify-content:center; gap:2.4rem; flex-wrap:wrap; color:#aeb6c0; font-size:.9rem; text-align:left; }
+  .visit-recap strong{ color:#fff; display:block; font-family:'Poppins',sans-serif; font-weight:500; margin-bottom:.2rem; }
+  .visit-recap .map-link{ color:#8fb8d9; border-color:rgba(255,255,255,0.3); }
+  .visit-recap .map-link:hover{ color:#fff; border-color:#fff; }
+
+  footer{ padding:2.2rem 1.5rem; text-align:center; font-size:.85rem; background:var(--ink); color:#838c99; }
+  .footer-links{ display:flex; justify-content:center; flex-wrap:wrap; gap:1.3rem 1.6rem; margin-bottom:1rem; }
+  .footer-links a{ color:#c7ccd3; font-size:.85rem; }
+  .footer-links a:hover{ color:#fff; }
+  .footer-biz{ margin-top:.5rem; color:#838c99; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .hero-card{ order:-1; }
+    .locations{ grid-template-columns:1fr; }
+    .product-grid{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width:640px){
+    .nav-toggle-btn{ display:block; }
+    .site-nav{ position:fixed; inset:60px 0 auto 0; flex-direction:column; align-items:flex-start; background:#fff; border-bottom:1px solid var(--line); max-height:0; overflow:hidden; transition:max-height .25s ease; padding:0 1.5rem; }
+    .site-nav.open{ max-height:340px; padding:.5rem 1.5rem 1.1rem; }
+    .site-nav a{ padding:.9rem 0; width:100%; border-bottom:1px solid var(--line); }
+    .product-grid{ grid-template-columns:1fr 1fr; gap:1.2rem; }
+  }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+
+  /* ---------- animation (restrained: one load-in, scroll reveal, hover lift) ---------- */
+  @keyframes rise{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+  .hero-inner{ animation:rise .7s ease both; }
+
+  /* Default state is fully visible. JS only adds .reveal-pending for elements
+     currently out of view, so nothing depends on JavaScript running. */
+  .reveal-pending{ opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal-pending.in-view{ opacity:1; transform:none; }
+  .product-grid .reveal-pending:nth-child(2){ transition-delay:.08s; }
+  .product-grid .reveal-pending:nth-child(3){ transition-delay:.16s; }
+  .locations .reveal-pending:nth-child(2){ transition-delay:.08s; }
+
+  .site-header{ transition:box-shadow .2s ease; }
+  .site-header.scrolled{ box-shadow:0 2px 12px rgba(28,34,48,0.08); }
+
+  .btn{ transition:background .15s ease,color .15s ease,border-color .15s ease,transform .15s ease; }
+  .btn:hover{ transform:translateY(-1px); }
+
+  .location-card,.product{ transition:transform .18s ease, box-shadow .18s ease; }
+  .location-card:hover,.product:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(28,34,48,0.08); }
+
+  .brand-pill{ transition:transform .15s ease, box-shadow .15s ease; }
+  .brand-pill:hover{ transform:translateY(-2px); box-shadow:0 6px 14px rgba(28,34,48,0.08); }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="icon-bag" viewBox="0 0 48 48">
+    <path d="M14 18 C14 11 18 7 24 7 C30 7 34 11 34 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="9" y="18" width="30" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <line x1="9" y1="26" x2="39" y2="26" stroke="currentColor" stroke-width="1.1" opacity="0.55"/>
+  </symbol>
+  <symbol id="icon-shoe" viewBox="0 0 48 48">
+    <path d="M8 32 C8 28 11 26 15 25 L30 18 C35 16 40 17 40 23 C40 28 36 31 31 32 L13 37 C9 38 8 35 8 32 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+    <path d="M30 20 L32 27" stroke="currentColor" stroke-width="1.2" opacity="0.55"/>
+  </symbol>
+  <symbol id="icon-suitcase" viewBox="0 0 48 48">
+    <rect x="8" y="16" width="32" height="23" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <path d="M18 16 V11 a2 2 0 0 1 2-2 h8 a2 2 0 0 1 2 2 V16" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <line x1="24" y1="16" x2="24" y2="39" stroke="currentColor" stroke-width="1.1" opacity="0.45"/>
+  </symbol>
+  <symbol id="icon-shirt" viewBox="0 0 48 48">
+    <path d="M16 9 L24 13 L32 9 L39 16 L34 21 L31 18 V40 H17 V18 L14 21 L9 16 Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="icon-pin" viewBox="0 0 48 48">
+    <path d="M24 5 C16 5 10 11 10 19 C10 29 24 43 24 43 C24 43 38 29 38 19 C38 11 32 5 24 5 Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+    <circle cx="24" cy="19" r="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+  </symbol>
+</svg>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand brand-lockup" href="#top">
+      <span class="k-badge">
+        <svg viewBox="0 0 76 76" aria-hidden="true"><rect x="4" y="4" width="68" height="68" rx="14" fill="var(--green-mid)" transform="rotate(10 38 38)"/></svg>
+        <span class="k-letter" aria-hidden="true">K</span>
+      </span>
+      <span class="wordmark" aria-hidden="true"><span class="w-kerm">Kerm</span><span class="w-designer">Designer</span></span>
+      <span class="sr-only">Kerm Designer</span>
+    </a>
+    <button type="button" class="nav-toggle-btn" id="navToggleBtn" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+    <nav class="site-nav" id="site-nav">
+      <a href="#shop">Shop</a>
+      <a href="#locations">Locations</a>
+      <a href="#brands">Brands</a>
+      <a class="nav-cta" href="https://wa.me/254720841678" target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="top">
+    <svg class="drip-band" width="100%" height="92" aria-hidden="true">
+      <defs>
+        <pattern id="dripTile" width="180" height="92" patternUnits="userSpaceOnUse">
+          <rect x="7" y="0" width="16" height="92" rx="8" fill="var(--red)"/>
+          <rect x="37" y="0" width="16" height="76" rx="8" fill="var(--red)"/>
+          <rect x="67" y="0" width="16" height="86" rx="8" fill="var(--red)"/>
+          <rect x="97" y="0" width="16" height="68" rx="8" fill="var(--red)"/>
+          <rect x="127" y="0" width="16" height="90" rx="8" fill="var(--red)"/>
+          <rect x="157" y="0" width="16" height="80" rx="8" fill="var(--red)"/>
+          <rect x="0" y="0" width="180" height="46" fill="var(--red)"/>
+          <circle cx="45" cy="19" r="3" fill="#fbe4e1"/>
+          <circle cx="135" cy="14" r="2.3" fill="#fbe4e1"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="92" fill="url(#dripTile)"/>
+    </svg>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="sr-only">Kerm Designer</h1>
+        <p class="hero-kicker">Two stores in Nairobi</p>
+        <div class="brand-lockup lg reveal">
+          <span class="k-badge">
+            <svg viewBox="0 0 76 76" aria-hidden="true"><rect x="4" y="4" width="68" height="68" rx="14" fill="var(--green-mid)" transform="rotate(10 38 38)"/></svg>
+            <span class="k-letter" aria-hidden="true">K</span>
+          </span>
+          <span class="wordmark" aria-hidden="true"><span class="w-kerm">Kerm</span><span class="w-designer">Designer</span></span>
+        </div>
+        <span class="script">Infinity Style</span>
+        <p class="hero-sub">Bags, shoes, suitcases and menswear from Regina Kerm. Shop in-store at Town or Kilimani, or message us directly.</p>
+        <div class="hero-actions">
+          <a href="#shop" class="btn btn-primary">Shop the collection</a>
+          <a href="https://wa.me/254720841678" target="_blank" rel="noopener" class="btn btn-outline">Chat on WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-card reveal">
+        <p class="hero-card-title">Find us</p>
+        <p>Town Branch: Hazina Towers, opp. Anniversary Towers</p>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hazina+Towers%2C+Opposite+Anniversary+Towers%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a>
+        <p style="margin-top:1rem">Kilimani Branch: Argwings Arcade Mall, Shop No. 89</p>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Argwings+Arcade+Mall%2C+Kilimani%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a>
+        <p style="margin-top:1rem">Call or WhatsApp +254 720 841678</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="locations" id="locations" aria-label="Store locations">
+    <div class="location-card reveal">
+      <svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>
+      <div>
+        <h3>Town Branch</h3>
+        <p>Hazina Towers, opposite Anniversary Towers</p>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hazina+Towers%2C+Opposite+Anniversary+Towers%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a>
+      </div>
+    </div>
+    <div class="location-card reveal">
+      <svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg>
+      <div>
+        <h3>Kilimani Branch</h3>
+        <p>Argwings Arcade Mall, Shop No. 89</p>
+        <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Argwings+Arcade+Mall%2C+Kilimani%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="brands" id="brands">
+    <div class="wrap reveal">
+      <h2>Brands in store</h2>
+      <div class="brand-pills">
+        <span class="brand-pill">Chrisbella</span>
+        <span class="brand-pill">Coach</span>
+        <span class="brand-pill">Chrisskalla</span>
+        <span class="brand-pill">Pedra</span>
+        <span class="brand-pill">Doll Shoes</span>
+      </div>
+      <p class="brands-note">Plus suitcases, khaki trousers, official shirts and dress shoes.</p>
+    </div>
+  </section>
+
+  <section id="shop">
+    <div class="section-head reveal">
+      <h2>Shop the range</h2>
+      <p>A look at what's in store. Photos and prices are being added piece by piece.</p>
+    </div>
+
+    <div class="category">
+      <div class="category-head"><svg class="icon" aria-hidden="true"><use href="#icon-bag"/></svg><h3>Bags</h3></div>
+      <p class="category-note">Handbags and crossbodies, including Chrisbella and Coach.</p>
+      <div class="product-grid">
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-bag"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-bag"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-bag"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-head"><svg class="icon" aria-hidden="true"><use href="#icon-shoe"/></svg><h3>Shoes &amp; heels</h3></div>
+      <p class="category-note">Open shoes, heels and Doll Shoes and Pedra styles.</p>
+      <div class="product-grid">
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shoe"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shoe"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shoe"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-head"><svg class="icon" aria-hidden="true"><use href="#icon-suitcase"/></svg><h3>Suitcases</h3></div>
+      <p class="category-note">Travel luggage in a range of sizes.</p>
+      <div class="product-grid">
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-suitcase"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-suitcase"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-suitcase"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-head"><svg class="icon" aria-hidden="true"><use href="#icon-shirt"/></svg><h3>Menswear</h3></div>
+      <p class="category-note">Khaki trousers, official shirts and dress shoes.</p>
+      <div class="product-grid">
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shirt"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shirt"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+        <article class="product reveal"><div class="product-photo photo-slot"><svg class="icon" aria-hidden="true"><use href="#icon-shirt"/></svg><span>Add photo</span></div><div class="product-meta"><p class="product-name">Item name</p><p class="product-price">Add price</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="enquire" id="enquire">
+    <div class="section-head reveal">
+      <h2>Send an enquiry</h2>
+      <p>Fill this in and it opens WhatsApp with your message ready to send. This site does not store or transmit the details anywhere else.</p>
+    </div>
+    <form class="enquiry-form" id="enquiry-form">
+      <div class="field">
+        <label for="ef-name">Your name</label>
+        <input type="text" id="ef-name" name="name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="ef-contact">Phone or Instagram handle (optional)</label>
+        <input type="text" id="ef-contact" name="contact" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="ef-message">What are you looking for?</label>
+        <textarea id="ef-message" name="message" rows="4" required></textarea>
+      </div>
+      <label class="consent">
+        <input type="checkbox" id="ef-consent" name="consent" required>
+        <span>I agree that sending this opens WhatsApp with the details above, sent directly to Kerm Designer. Read the <a href="privacy.html">Privacy Policy</a>.</span>
+      </label>
+      <button type="submit" class="btn btn-primary" id="ef-submit">Send enquiry via WhatsApp</button>
+      <p class="form-note">Prefer to type directly? Message <a href="https://instagram.com/reginakerm254designers" target="_blank" rel="noopener" style="color:var(--green); text-decoration:underline;">@reginakerm254designers</a> on Instagram instead.</p>
+    </form>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <h2>Visit or message us</h2>
+      <p>Stop by either branch, or reach out to ask about a piece, check stock, or arrange delivery.</p>
+      <div class="visit-actions">
+        <a href="https://wa.me/254720841678" target="_blank" rel="noopener" class="btn btn-primary">Chat on WhatsApp</a>
+        <a href="tel:+254720841678" class="btn btn-ghost">Call +254 720 841678</a>
+        <a href="https://instagram.com/reginakerm254designers" target="_blank" rel="noopener" class="btn btn-ghost">Message on Instagram</a>
+      </div>
+      <div class="visit-recap">
+        <p><strong>Town Branch</strong>Hazina Towers, opp. Anniversary Towers<br><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Hazina+Towers%2C+Opposite+Anniversary+Towers%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a></p>
+        <p><strong>Kilimani Branch</strong>Argwings Arcade Mall, Shop No. 89<br><a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Argwings+Arcade+Mall%2C+Kilimani%2C+Nairobi%2C+Kenya" target="_blank" rel="noopener">Get directions</a></p>
+        <p><strong>Instagram</strong>@reginakerm254designers</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms and Conditions</a>
+    <a href="cookie-policy.html">Cookie Policy</a>
+    <a href="refund-policy.html">Refund Policy</a>
+  </div>
+  <p>&copy; 2026 Kerm Designer, Infinity Style</p>
+  <p class="footer-biz">Kerm Designer, Nairobi, Kenya. +254 720 841678</p>
+</footer>
+
+<script>
+  // Mobile menu: accessible button toggle (keyboard and screen-reader friendly)
+  (function(){
+    var btn = document.getElementById('navToggleBtn');
+    var nav = document.getElementById('site-nav');
+    btn.addEventListener('click', function(){
+      var isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    nav.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+
+  // In-page navigation: scroll directly to the section instead of changing the
+  // URL hash, so links work the same whether this file is opened directly,
+  // hosted, or viewed inside a preview frame.
+  document.querySelectorAll('a[href^="#"]').forEach(function(link){
+    link.addEventListener('click', function(e){
+      var id = this.getAttribute('href').slice(1);
+      var target = document.getElementById(id);
+      if(target){
+        e.preventDefault();
+        target.scrollIntoView({ behavior:'smooth', block:'start' });
+      }
+    });
+  });
+
+  // Enquiry form: builds a WhatsApp message from the fields and opens it.
+  // Nothing here is sent to or stored on this website itself.
+  document.getElementById('enquiry-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('ef-name').value.trim();
+    var contact = document.getElementById('ef-contact').value.trim();
+    var message = document.getElementById('ef-message').value.trim();
+    var text = "Hi Kerm Designer, I'm " + name + ".";
+    if(contact){ text += " You can reach me at " + contact + "."; }
+    text += " " + message;
+    var url = "https://wa.me/254720841678?text=" + encodeURIComponent(text);
+    window.open(url, "_blank", "noopener");
+  });
+  // Header shadow once the page has scrolled past the top.
+  (function(){
+    var header = document.querySelector('.site-header');
+    window.addEventListener('scroll', function(){
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    }, { passive:true });
+  })();
+
+  // Scroll reveal: progressive enhancement only. Elements are fully visible
+  // by default; this only adds the fade-in for people whose browser supports
+  // IntersectionObserver and who haven't asked for reduced motion.
+  (function(){
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced || !('IntersectionObserver' in window)) return;
+    var els = document.querySelectorAll('.reveal');
+    els.forEach(function(el){ el.classList.add('reveal-pending'); });
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.15 });
+    els.forEach(function(el){ observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
